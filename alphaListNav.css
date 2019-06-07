@@ -1,0 +1,14 @@
+.alpha-list-group {
+    display: none;
+}
+
+.alpha-list-group.active {
+    display: block;
+}
+
+#alpha-nav {
+    display: flex;
+}
+
+.character-element.inactive {
+}
