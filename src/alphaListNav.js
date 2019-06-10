@@ -1,9 +1,9 @@
 // Working Example
-// CURRENTY UNDER CONSTRUCTION - 6/6/2019
+// CURRENTY UNDER CONSTRUCTION - 6/10/2019
 
 /**
 * ** TODO: **
-* 1. Add Babel transpiling
+* 1. Add Babel transpiling  // DONE
 * 2. Add additional options
 * 3. Add nice css styling
 * 4. Refactor & optimize for size
@@ -48,10 +48,11 @@ class AlphaListNav {
         // get reference to alpha-nav
         const alphaNavElem = document.getElementById('alpha-nav');
         // add 'active' class to initLetter option on init
-        document.getElementById(this.options.initLetter.toUpperCase()).classList.add('active');
+        document.getElementById(this.options.initLetter.toLowerCase()).classList.add('active');
         
         // Add event listener to alpha-nav buttons
         alphaNavElem.addEventListener('click', e => {
+            e.preventDefault();
             const letter = e.target.dataset.filter;
             // remove active class from all buttons
             for (let btn of alphaNavElem.children) {
@@ -71,7 +72,7 @@ class AlphaListNav {
     // create object of list items ordered by each alphabet letter
     _getAlphaObj = (listItemsArray) => {
         const alphaList = listItemsArray.reduce((accum, val) => {
-            const letter = val.textContent.charAt(0);
+            const letter = val.textContent.charAt(0).toLowerCase();
             if (accum[letter]) {
                 accum[letter].push(val)
             } else {
@@ -79,7 +80,7 @@ class AlphaListNav {
             }
             return accum;
         }, {});
-        return {...alphaList};
+        return alphaList;
     }
     
     // generate new list HTML markup
@@ -105,10 +106,10 @@ class AlphaListNav {
         alphaNav.className = 'character-container';
         const abcChars = this._getArrayAtoZ();
         const navigationEntries = abcChars.reduce((block, charToAdd) => { 
-            if (alphaObj[charToAdd]) {
-               return block + "<button class='character-element' data-filter='" + charToAdd + "'>" + charToAdd + "</button>";  
+            if (alphaObj[charToAdd.toLowerCase()]) {
+               return block + '<a class="character-element" data-filter="' + charToAdd.toLowerCase() + '" href="#">' + charToAdd + '</a>';  
             }
-           return block + "<button class='character-element inactive' data-filter='" + charToAdd + "' disabled>" + charToAdd + "</button>"; 
+           return block + '<a class="character-element inactive" data-filter="' + charToAdd.toLowerCase() + '" href="#" disabled>' + charToAdd + '</a>'; 
         }, '');
         alphaNav.innerHTML = navigationEntries;
         return alphaNav;

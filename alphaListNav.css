@@ -1,3 +1,6 @@
+body {
+    font-size: 19px;
+}
 .alpha-list-group {
     display: none;
 }
@@ -8,6 +11,27 @@
 
 #alpha-nav {
     display: flex;
+    flex-wrap: wrap;
+}
+
+#alpha-nav .character-element {
+    background-color: transparent;
+    border: 1px solid #ccc;
+    padding: 0.4rem;
+    margin: 0 0.1rem 0.4rem;
+    cursor: pointer;
+    font-size: 1rem;
+    text-decoration: none;
+    line-height: 0.8;
+}
+
+#alpha-nav .character-element:hover,
+#alpha-nav .character-element:active {
+    background-color: #ccc;
+}
+
+#alpha-nav .character-element.active {
+    background-color: #ddd;
 }
 
 .character-element.inactive {
