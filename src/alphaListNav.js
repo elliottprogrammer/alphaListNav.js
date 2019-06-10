@@ -47,12 +47,14 @@ class AlphaListNav {
         newListElem.parentNode.insertBefore(alphaNav, newListElem);
         // get reference to alpha-nav
         const alphaNavElem = document.getElementById('alpha-nav');
-        // add 'active' class to initLetter option on init
+        // add 'active' class to initLetter option on init (on navbar and also list)
+        alphaNavElem.querySelector(`a[data-filter="${this.options.initLetter.toLowerCase()}"]`).classList.add('active');
         document.getElementById(this.options.initLetter.toLowerCase()).classList.add('active');
         
         // Add event listener to alpha-nav buttons
         alphaNavElem.addEventListener('click', e => {
             e.preventDefault();
+            if (!e.target.dataset.filter) return null
             const letter = e.target.dataset.filter;
             // remove active class from all buttons
             for (let btn of alphaNavElem.children) {
@@ -109,7 +111,7 @@ class AlphaListNav {
             if (alphaObj[charToAdd.toLowerCase()]) {
                return block + '<a class="character-element" data-filter="' + charToAdd.toLowerCase() + '" href="#">' + charToAdd + '</a>';  
             }
-           return block + '<a class="character-element inactive" data-filter="' + charToAdd.toLowerCase() + '" href="#" disabled>' + charToAdd + '</a>'; 
+           return block + '<div class="character-element disabled">' + charToAdd + '</div>'; 
         }, '');
         alphaNav.innerHTML = navigationEntries;
         return alphaNav;

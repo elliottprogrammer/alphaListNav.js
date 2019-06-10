@@ -14,25 +14,27 @@ body {
     flex-wrap: wrap;
 }
 
-#alpha-nav .character-element {
+.character-element {
     background-color: transparent;
     border: 1px solid #ccc;
     padding: 0.4rem;
     margin: 0 0.1rem 0.4rem;
-    cursor: pointer;
     font-size: 1rem;
     text-decoration: none;
     line-height: 0.8;
 }
 
-#alpha-nav .character-element:hover,
-#alpha-nav .character-element:active {
+.character-element:not(.disabled):hover,
+.character-element:not(.disabled):active {
     background-color: #ccc;
+    cursor: pointer;
 }
 
-#alpha-nav .character-element.active {
+.character-element.disabled {
+    color: #aaa;
+    cursor: default;
+}
+
+.character-element.active {
     background-color: #ddd;
-}
-
-.character-element.inactive {
 }
