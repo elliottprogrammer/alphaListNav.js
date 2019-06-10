@@ -29,6 +29,7 @@ class AlphaListNav {
     init = () => {
         // get list parent elem
         let listParent = document.getElementById(this.elemId);
+        if (!listParent) return;
         // get array of list items
         const listItems = Array.prototype.slice.call(listParent.children);
         // sort list into an alphabetical object
@@ -46,8 +47,9 @@ class AlphaListNav {
         newListElem.parentNode.insertBefore(alphaNav, newListElem);
         // get reference to alpha-nav
         const alphaNavElem = document.getElementById('alpha-nav');
+        // add 'active' class to initLetter option on init
         document.getElementById(this.options.initLetter.toUpperCase()).classList.add('active');
-        console.log(alphaNavElem.children);
+        
         // Add event listener to alpha-nav buttons
         alphaNavElem.addEventListener('click', e => {
             const letter = e.target.dataset.filter;
