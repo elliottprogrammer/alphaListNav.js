@@ -9,6 +9,10 @@
 * 4. Refactor & optimize for size
 * 
 **/
+require("core-js/modules/es6.symbol");
+
+require("core-js/modules/web.dom.iterable");
+
 class AlphaListNav {
     constructor(elemId, options = {}) {
             

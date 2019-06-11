@@ -2,9 +2,10 @@
     "name": "alphalistnav",
     "version": "1.0.0",
     "description": "### Similar functionality to [jQuery ListNav](https://github.com/esteinborn/jquery-listnav) but without the jQuery dependency. Made with vanilla JavaScript.",
-    "main": "alphaListNav.js",
+    "main": "webpack.config.js",
     "dependencies": {
-        "@babel/polyfill": "^7.4.4"
+        "@babel/polyfill": "^7.4.4",
+        "core-js": "^3.1.3"
     },
     "devDependencies": {
         "@babel/cli": "^7.4.4",
