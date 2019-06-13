@@ -39,9 +39,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 * 4. Refactor & optimize for size
 * 
 **/
-require("core-js/modules/es6.symbol");
-
-require("core-js/modules/web.dom.iterable");
+include('core-js/stable');
 
 var AlphaListNav = function AlphaListNav(elemId) {
   var _this = this;

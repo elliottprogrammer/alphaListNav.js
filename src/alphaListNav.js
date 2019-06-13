@@ -9,7 +9,7 @@
 * 4. Refactor & optimize for size
 * 
 **/
-
+include('core-js/stable');
 class AlphaListNav {
     constructor(elemId, options = {}) {
             
