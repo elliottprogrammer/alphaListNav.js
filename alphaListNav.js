@@ -190,10 +190,10 @@
 **************/
 
 //// create new Plugin instance
-// var pluginInstance = new PluginNameHere('elementID', {
+// var alphaNavInstance = new AlphaListNav('elementID', {
 //     initLetter: 'A',
 //     includeAll: false,
-// })
+// });
 
 //// access public plugin methods
-// pluginInstance.doSomething("Doing Something Else")
+// alphaNavInstance.doSomething("Doing Something Else")
