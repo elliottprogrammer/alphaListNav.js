@@ -7,3 +7,7 @@
 #### CodePen example here:
 
 (https://codepen.io/melliatto/pen/vwWjjj)
+
+#### Author:
+
+[Bryan Elliott](https://github.com/elliottprogrammer) 
