@@ -26,6 +26,7 @@
     var defaults = {
         initLetter: 'A',
         includeAll: false,
+        includeNums: false,
     };
     /**
      * Merge defaults with user options
@@ -49,13 +50,26 @@
     };
 
     /**
+     * Plugin Object
+     * @param  {element}  element  The selector element(s).
+     * @param {Object} options User options
+     * @constructor
+     */
+    function Plugin(element, options) {
+        this.element = element;
+        this.options = extend(defaults, options);
+        this.init(); // Initialization Code Here
+    }
+
+    /**
      * Helper Functions
      @private
      */
     // create object of list items ordered by each alphabet letter
     var getAlphaObj = function(listItemsArray) {
         const alphaList = listItemsArray.reduce((accum, val) => {
-            const letter = val.textContent.charAt(0).toLowerCase();
+            let letter = val.textContent.charAt(0).toLowerCase();
+            if (letter.match(/[0-9]/)) letter = '_';
             if (accum[letter]) {
                 accum[letter].push(val);
             } else {
@@ -63,6 +77,7 @@
             }
             return accum;
         }, {});
+        console.log(alphaList);
         return alphaList;
     };
 
@@ -84,12 +99,17 @@
     };
 
     // generate alpha navigation bar
-    var generateAlphaNav = function(alphaObj) {
+    var generateAlphaNav = function(alphaObj, includeNums) {
         const alphaNav = document.createElement('div');
         alphaNav.id = 'alpha-nav';
         alphaNav.className = 'character-container';
-        const abcChars = getArrayAtoZ();
-        const navigationEntries = abcChars.reduce((block, charToAdd) => {
+        const navChars = getArrayAtoZ();
+        if (includeNums) {
+            navChars.unshift('0-9');
+
+            console.log(navChars);
+        }
+        const navigationEntries = navChars.reduce((block, charToAdd) => {
             if (alphaObj[charToAdd.toLowerCase()]) {
                 return (
                     block +
@@ -111,17 +131,10 @@
         return Array.apply(null, { length: 26 }).map((x, i) => String.fromCharCode(65 + i));
     };
 
-    /**
-     * Plugin Object
-     * @param  {element}  element  The selector element(s).
-     * @param {Object} options User options
-     * @constructor
-     */
-    function Plugin(element, options) {
-        this.element = element;
-        this.options = extend(defaults, options);
-        this.init(); // Initialization Code Here
-    }
+    // generate array of nums, 0 - 9
+    const getNums0thru9 = function() {
+        return Array.from(Array(10).keys());
+    };
 
     /**
      * Plugin prototype
@@ -141,7 +154,7 @@
             // generate new list html with sorting markup
             const newListHTML = generateNewListHTML(alphaObj);
             // generate the alpha-nav buttons html
-            const alphaNav = generateAlphaNav(alphaObj);
+            const alphaNav = generateAlphaNav(alphaObj, this.options.includeNums);
             // Replace the old list with the new alpha-list in the dom
             listParent.parentNode.replaceChild(newListHTML, listParent);
             // get reference to the new alpha-list
