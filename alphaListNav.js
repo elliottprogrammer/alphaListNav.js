@@ -1,3 +1,4 @@
+"use strict";
 /**
 * ** TODO: **
 * 1. Add Babel transpiling for better browser compatibility
@@ -17,18 +18,19 @@ class AlphaListNav {
 
         const defaultOptions = {
             initHidden: false,
-            initHiddenText: 'Tap a letter above to view matching items',
+            initHiddenText: 'Tap a letter above to view matching items',  // string or boolean false
             initLetter: 'A',
             includeAll: true,
             allText: 'All',
             noMatchText: 'No matching entries',
             includeNums: true,
-            concatenateNums: true,
+            concatenateNums: true, // 0 - 9
             includeOther: false,
             flagDisabled: true,
             removeDisabled: false,
-            prefixes: [],
-            filterSelector: '',
+            prefixes: [], // array of strings and/or RegEx's
+            filterSelector: '', 
+            showCounts: true,
         }
 
         this.listElem = this._isDomElement(listElem) ? listElem : false;
@@ -134,6 +136,37 @@ class AlphaListNav {
             }
 
         });
+
+        // Show letter counts
+        if (this.options.showCounts) {
+            Array.prototype.slice.call(alphaNavElem.children).forEach(alphaLink => {
+                alphaLink.addEventListener('mouseover', e => {
+                    let count = 0;
+                    if (e.target.dataset.filter) {
+                        const filter = e.target.dataset.filter;
+                        if (filter !== 'no-match') {
+                            if (filter === '*') {
+                                count = Object.keys(alphaObj).reduce((accum, key) => {
+                                    return accum + alphaObj[key].length;
+                                }, 0);
+                            } else {
+                                count = alphaObj[filter].length
+                            }
+                        }
+                    };
+                    const countElem = document.createElement('span');
+                    countElem.className="alphaNav-count-elem";
+                    countElem.style.cssText = 'position:absolute;top:-12px;left:0;width:100%;text-align:center;font-size:75%;';
+                    countElem.textContent = count;
+                    e.target.appendChild(countElem);
+                });
+    
+                alphaLink.addEventListener('mouseout', e => {
+                    e.target.removeChild(e.target.children[0]);
+                })
+            });
+        }
+        
     }
 
     initAlphaListNav = (newListElem, alphaNavElem, alphaObj) => {
@@ -244,6 +277,7 @@ class AlphaListNav {
             const ul = document.createElement('ul');
             ul.id = key;
             ul.className = 'alpha-list-group';
+
             alphaObj[key].forEach(node => {
                 ul.appendChild(node.cloneNode(true));
             });
