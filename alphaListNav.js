@@ -3,7 +3,6 @@
 * ** TODO: **
 * 1. Add Babel transpiling for better browser compatibility
 * 2. Add options
-*    - showCounts:
 *    - dont-count:
 *    - showLetterHeading
 *    - Remember last letter cookie?
@@ -17,9 +16,9 @@ class AlphaListNav {
     constructor(listElem, options = {}) {
 
         const defaultOptions = {
-            initHidden: false,
+            initHidden: true,
             initHiddenText: 'Tap a letter above to view matching items',  // string or boolean false
-            initLetter: 'A',
+            initLetter: '',
             includeAll: true,
             allText: 'All',
             noMatchText: 'No matching entries',
