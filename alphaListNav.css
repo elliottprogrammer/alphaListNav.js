@@ -1,11 +1,11 @@
 body {
     font-size: 19px;
 }
-.alpha-list-group {
+.alpha-list-group, .no-match-group {
     display: none;
 }
 
-.alpha-list-group.active {
+.alpha-list-group.active, .no-match-group.active {
     display: block;
 }
 
