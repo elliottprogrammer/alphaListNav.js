@@ -6,7 +6,7 @@
 *    - dont-count:
 *    - showLetterHeading
 *    - Remember last letter cookie?
-*    - onLetterClick function()
+*    - onLetterClick function()git add
 * 3. Add nice css styling
 * 4. Refactor & optimize for size
 * 
