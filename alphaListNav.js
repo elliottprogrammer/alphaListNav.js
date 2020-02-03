@@ -1,7 +1,12 @@
 /**
 * ** TODO: **
 * 1. Add Babel transpiling for better browser compatibility
-* 2. Add additional options
+* 2. Add options
+*    - showCounts:
+*    - dont-count:
+*    - showLetterHeading
+*    - Remember last letter cookie?
+*    - onLetterClick function()
 * 3. Add nice css styling
 * 4. Refactor & optimize for size
 * 
