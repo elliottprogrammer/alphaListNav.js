@@ -1,0 +1,44 @@
+{
+  "name": "alphalistnav",
+  "version": "0.7.1",
+  "description": "Filter An HTML List Alphebetically - alphaListNav.js will add an alphebetical navigation bar to all of your lists. Click a letter to quickly filter the list to show items that match that letter. With many different options and features.",
+  "main": "alphaListNav.js",
+  "scripts": {
+    "build": "webpack --env=production --mode=production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/elliottprogrammer/alphaListNav.js.git"
+  },
+  "keywords": [
+    "Alphebetical",
+    "list",
+    "filter",
+    "javascript",
+    "plugin",
+    "filter",
+    "list",
+    "navigation"
+  ],
+  "author": "[Bryan Elliott] (https://github.com/elliottprogrammer/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/elliottprogrammer/alphaListNav.js/issues"
+  },
+  "homepage": "https://github.com/elliottprogrammer/alphaListNav.js#readme",
+  "devDependencies": {
+    "@babel/core": "^7.8.4",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/preset-env": "^7.8.4",
+    "autoprefixer": "^9.7.4",
+    "babel-loader": "^8.0.6",
+    "css-loader": "^3.4.2",
+    "mini-css-extract-plugin": "^0.9.0",
+    "node-sass": "^4.13.1",
+    "postcss-loader": "^3.0.0",
+    "sass-loader": "^8.0.2",
+    "style-loader": "^1.1.3",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10"
+  }
+}

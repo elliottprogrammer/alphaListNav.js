@@ -12,7 +12,9 @@
 * 
 **/
 
-class AlphaListNav {
+import './alphaListNav.scss';
+
+export default class AlphaListNav {
     constructor(listElem, options = {}) {
 
         const defaultOptions = {
@@ -30,6 +32,7 @@ class AlphaListNav {
             prefixes: [], // array of strings and/or RegEx's
             filterSelector: '', 
             showCounts: true,
+            showLetterHeadings: true,
         }
 
         this.listElem = this._isDomElement(listElem) ? listElem : false;
@@ -174,8 +177,8 @@ class AlphaListNav {
             // if init letter is All(*), show all
             if (this.options.initLetter === '*' && this.options.includeAll) {
                 alphaNavElem.querySelector(`a[data-filter="${this.options.initLetter.toLowerCase()}"]`).classList.add('active');
-                const allListGroups = newListElem.querySelectorAll('ul.alpha-list-group');
-                Array.prototype.slice.call(allListGroups).forEach(ul => ul.classList.add('active'));
+                const allListGroups = newListElem.querySelectorAll('div.alpha-list-wrapper');
+                Array.prototype.slice.call(allListGroups).forEach(div => div.classList.add('active'));
                 // else show init letter, if it exists..
             } else if (alphaObj.hasOwnProperty(this.options.initLetter.toLowerCase())) {
                 // TODO: replace with create selectLetter() function
@@ -189,8 +192,8 @@ class AlphaListNav {
                     document.getElementById('initText').classList.add('active');
                 // if includeAll is set, show all list
             } else if (this.options.includeAll) {
-                const allListGroups = newListElem.querySelectorAll('ul.alpha-list-group');
-                Array.prototype.slice.call(allListGroups).forEach(ul => ul.classList.add('active'));
+                const allListGroups = newListElem.querySelectorAll('div.alpha-list-wrapper');
+                Array.prototype.slice.call(allListGroups).forEach(div => div.classList.add('active'));
                 alphaNavElem.querySelector(`a[data-filter="*"]`).classList.add('active');
                 // if none of above, find first letter with with list items, and show that first.
             } else {
@@ -267,28 +270,58 @@ class AlphaListNav {
         return alphaList;
     }
 
+    _getHeading(key) {
+        let headingText = '';
+        switch(true) {
+            case /[*]/.test(key):
+                headingText = this.options.allText;
+                break;
+            case /[_]/.test(key):
+                headingText = '0 - 9';
+                break;
+            case /[-]/.test(key):
+                headingText = 'Others';
+                break;
+            default:
+                headingText = key.toUpperCase();
+        }
+        return headingText;
+    }
+
     // generate new list HTML markup
     _generateNewListHTML = (alphaObj) => {
         const wrapper = document.createElement('div');
         wrapper.id = 'alpha-list';
         wrapper.className = 'alpha-list';
-        const newList = Object.keys(alphaObj).sort().map((key) => {
+        Object.keys(alphaObj).sort().map((key) => {
+            const div = document.createElement('div');
+            div.id = key;
+            div.className = 'alpha-list-wrapper';
+            if (this.options.showLetterHeadings) {
+                const heading = document.createElement('h3');
+                heading.className = 'alpha-list-heading';
+                heading.textContent = this._getHeading(key)
+                div.appendChild(heading);
+            }
             const ul = document.createElement('ul');
-            ul.id = key;
             ul.className = 'alpha-list-group';
-
+            
             alphaObj[key].forEach(node => {
                 ul.appendChild(node.cloneNode(true));
             });
-            wrapper.appendChild(ul);
+            div.appendChild(ul);
+            wrapper.appendChild(div);
         });
+        const noMatchDiv = document.createElement('div');
+        noMatchDiv.id = 'no-match';
         const noMatchUl = document.createElement('ul');
-        noMatchUl.id = 'no-match';
         noMatchUl.className = 'no-match-group';
         const noMatchLi = document.createElement('li');
         noMatchLi.textContent = this.options.noMatchText;
+        
         noMatchUl.appendChild(noMatchLi);
-        wrapper.appendChild(noMatchUl);
+        noMatchDiv.appendChild(noMatchUl);
+        wrapper.appendChild(noMatchDiv);
         return wrapper;
     }
 
@@ -350,3 +383,5 @@ class AlphaListNav {
     };
 
 }
+export var __useDefault = true;
+

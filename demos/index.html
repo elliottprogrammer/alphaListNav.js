@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="../alphaListNav.css">
+    <link rel="stylesheet" href="../dist/alphaListNav.min.css">
     <title>Alphebetical List Nav</title>
 </head>
 <body>
@@ -361,12 +361,13 @@
         <li class="ln-no-match listNavHide">No matching entries</li>
     </ul> -->
 
-    <script src="../alphaListNav.js"></script>
+    <script src="../dist/alphaListNav.min.js"></script>
+    <!-- <script src="../alphaListNav.js"></script> -->
     <script>
 
         // Create new instance of AlphaListNav
         //const cityList = new AlphaListNav(document.getElementById('demoSix'), {});
-        const cityList = new AlphaListNav(document.getElementById('list-nav'), { initHidden: true, initHiddenText: false });
+        const cityList = new AlphaListNav(document.getElementById('list-nav'));
 
     </script>
 </body>
