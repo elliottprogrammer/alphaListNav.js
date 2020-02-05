@@ -1,10 +1,13 @@
 "use strict";
+/*! alphaListNav.js - v0.7.1
+Build Date: 02-05-2020
+Author: [Bryan Elliott] (https://github.com/elliottprogrammer/)
+Git Repository: git+https://github.com/elliottprogrammer/alphaListNav.js.git */
+
 /**
 * ** TODO: **
-* 1. Add Babel transpiling for better browser compatibility
 * 2. Add options
 *    - dont-count:
-*    - showLetterHeading
 *    - Remember last letter cookie?
 *    - onLetterClick function()git add
 * 3. Add nice css styling
@@ -12,9 +15,7 @@
 * 
 **/
 
-import './alphaListNav.scss';
-
-export default class AlphaListNav {
+class AlphaListNav {
     constructor(listElem, options = {}) {
 
         const defaultOptions = {
@@ -36,12 +37,13 @@ export default class AlphaListNav {
         }
 
         this.listElem = this._isDomElement(listElem) ? listElem : false;
-        //this.elemId = elemId;
+
         this.options = {
             ...defaultOptions,
             ...options
         }
 
+        // if there is prefixes[], check if any are strings, if so, convert to them to RegEx's
         if (this.options.prefixes.length) {
             const regexes = this.options.prefixes.map(val => {
                 if (typeof val === 'string') {
@@ -58,41 +60,12 @@ export default class AlphaListNav {
         this.init();
     }
 
-    // Retrieve the text value from DOM node or an array of DOM nodes.
-    // Taken from jQuery (source: https://github.com/jquery/jquery/blob/master/src/core.js)
-    _getText = (elem) => {
-        let node,
-            ret = "",
-            i = 0,
-            nodeType = elem.nodeType;
-        if (!nodeType) {
-            // If no nodeType, this is expected to be an array
-            while ((node = elem[i++])) {
-                // Do not traverse comment nodes
-                ret += this._getText(node);
-            }
-        } else if (nodeType === 1 || nodeType === 9 || nodeType === 11) {
-            // Use textContent for elements
-            if (typeof elem.textContent === "string") {
-                return elem.textContent;
-            } else {
-                // Traverse its children
-                for (elem = elem.firstChild; elem; elem = elem.nextSibling) {
-                    ret += this._getText(elem);
-                }
-            }
-        } else if (nodeType === 3 || nodeType === 4) {
-            return elem.nodeValue;
-        }
-        return ret;
-    }
-
     init = () => {
 
         // if first arg is not an HTMLElement, return
         if (!this.listElem) { console.error('The supplied argument must be a HTML DOM element.'); return; }
         // get array of list items
-        const listItems = this._getListItems(this.listElem) //Array.prototype.slice.call(this.listElem.children);
+        const listItems = this._getListItems(this.listElem);
         //console.log(listItems);
         // sort list into an alphabetical object
         const alphaObj = this._getAlphaObj(listItems);
@@ -169,6 +142,35 @@ export default class AlphaListNav {
             });
         }
         
+    }
+
+    // Retrieve the text value from DOM node or an array of DOM nodes.
+    // Taken from jQuery (source: https://github.com/jquery/jquery/blob/master/src/core.js)
+    _getText = (elem) => {
+        let node,
+            ret = "",
+            i = 0,
+            nodeType = elem.nodeType;
+        if (!nodeType) {
+            // If no nodeType, this is expected to be an array
+            while ((node = elem[i++])) {
+                // Do not traverse comment nodes
+                ret += this._getText(node);
+            }
+        } else if (nodeType === 1 || nodeType === 9 || nodeType === 11) {
+            // Use textContent for elements
+            if (typeof elem.textContent === "string") {
+                return elem.textContent;
+            } else {
+                // Traverse its children
+                for (elem = elem.firstChild; elem; elem = elem.nextSibling) {
+                    ret += this._getText(elem);
+                }
+            }
+        } else if (nodeType === 3 || nodeType === 4) {
+            return elem.nodeValue;
+        }
+        return ret;
     }
 
     initAlphaListNav = (newListElem, alphaNavElem, alphaObj) => {
@@ -273,14 +275,16 @@ export default class AlphaListNav {
     _getHeading(key) {
         let headingText = '';
         switch(true) {
-            case /[*]/.test(key):
+            case /^[*]$/.test(key):
                 headingText = this.options.allText;
                 break;
-            case /[_]/.test(key):
+            case /^[_]$/.test(key):
                 headingText = '0 - 9';
                 break;
-            case /[-]/.test(key):
+            case /^[-]$/.test(key):
                 headingText = 'Others';
+                break;
+            case /^initText$/.test(key):
                 break;
             default:
                 headingText = key.toUpperCase();
@@ -293,7 +297,17 @@ export default class AlphaListNav {
         const wrapper = document.createElement('div');
         wrapper.id = 'alpha-list';
         wrapper.className = 'alpha-list';
-        Object.keys(alphaObj).sort().map((key) => {
+        const NewList = Object.keys(alphaObj)
+            .sort((a,b) => {
+                if (a === '-') return 1;
+                if (b === '-') return -1;
+                if (a < b)
+                    return -1;
+                if (a > b)
+                    return 1;
+                return 0;
+            })
+            .map((key) => {
             const div = document.createElement('div');
             div.id = key;
             div.className = 'alpha-list-wrapper';
@@ -301,7 +315,8 @@ export default class AlphaListNav {
                 const heading = document.createElement('h3');
                 heading.className = 'alpha-list-heading';
                 heading.textContent = this._getHeading(key)
-                div.appendChild(heading);
+                if (heading.textContent)
+                    div.appendChild(heading);
             }
             const ul = document.createElement('ul');
             ul.className = 'alpha-list-group';
@@ -311,6 +326,7 @@ export default class AlphaListNav {
             });
             div.appendChild(ul);
             wrapper.appendChild(div);
+            return div;   
         });
         const noMatchDiv = document.createElement('div');
         noMatchDiv.id = 'no-match';
@@ -383,5 +399,3 @@ export default class AlphaListNav {
     };
 
 }
-export var __useDefault = true;
-
