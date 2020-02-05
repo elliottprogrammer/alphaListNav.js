@@ -103,8 +103,10 @@ class AlphaListNav {
             e.target.classList.add('active');
             // add active class to the list matching the cooresponding clicked letter
             if (letter === '*') {
-                for (let ul of newListElem.children) {
-                    ul.classList.add('active');
+                console.log(newListElem.children);
+                for (let div of newListElem.children) {
+                    if (div.id !== 'no-match' )
+                        div.classList.add('active');
                 }
             } else {
                 document.getElementById(letter).classList.add('active');
