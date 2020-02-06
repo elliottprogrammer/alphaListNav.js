@@ -1,0 +1,44 @@
+body {
+    font-size: 19px;
+}
+.alpha-list-wrapper, #no-match {
+    display: none;
+}
+
+.alpha-list-wrapper.active, #no-match.active {
+    display: block;
+}
+
+#alpha-nav {
+    padding-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.character-element {
+    position: relative;
+    background-color: transparent;
+    border: 1px solid #ccc;
+    padding: 0.4rem;
+    margin: 0 0.1rem 0.4rem;
+    font-size: 1rem;
+    text-decoration: none;
+    line-height: 0.8;
+}
+
+.character-element:not(.disabled):hover,
+.character-element:not(.disabled):active {
+    background-color: #ccc;
+    cursor: pointer;
+}
+
+.character-element.disabled {
+    color: #aaa;
+    cursor: default;
+}
+
+.character-element.active {
+    background-color: #ddd;
+}
+
+
