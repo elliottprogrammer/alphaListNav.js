@@ -9,7 +9,7 @@ Git Repository: git+https://github.com/elliottprogrammer/alphaListNav.js.git */
 * 2. Add options
 *    - dont-count:
 *    - Remember last letter cookie?
-*    - onLetterClick function()git add
+*    - onLetterClick function()
 * 3. Add nice css styling
 * 4. Refactor & optimize for size
 * 
@@ -43,7 +43,7 @@ class AlphaListNav {
             ...options
         }
 
-        // if there is prefixes[], check if any are strings, if so, convert to them to RegEx's
+        // if there is options.prefixes[], check if any are strings, if so, convert to them to RegEx's
         if (this.options.prefixes.length) {
             const regexes = this.options.prefixes.map(val => {
                 if (typeof val === 'string') {
@@ -379,7 +379,13 @@ class AlphaListNav {
                 if (this.options.removeDisabled) {
                     return block;
                 }
-                return block + '<div class="character-element disabled">' + navChar + '</div>';
+                if (navChar === '_') {
+                    return block + '<div class="character-element disabled">0 - 9</div>';
+                } else if (navChar === '-') {
+                    return block + '<div class="character-element disabled">...</div>';
+                } else {
+                    return block + '<div class="character-element disabled">' + navChar + '</div>';
+                }   
             }
             return block + '<a class="character-element" data-filter="no-match" href="#">' + navChar + '</a>';
         }, '');
