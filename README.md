@@ -17,7 +17,7 @@ This plugin (**alphaListNav.js**) has very similar functionality to [jQuery List
 
 ## Installation
 
-#### Add CSS file into <head>:
+#### Add CSS file into `<head>`:
 
 ```html
 <link rel="stylesheet" href="alphaListNav.css"/>
@@ -29,7 +29,7 @@ This plugin (**alphaListNav.js**) has very similar functionality to [jQuery List
 <ul id="myList">...</ul>
 ```
 
-#### Add the JavaScript before </body>:
+#### Add the JavaScript before `</body>`:
 ```html
 <script src="alphaListNav.min.js"></script>
 <script>
