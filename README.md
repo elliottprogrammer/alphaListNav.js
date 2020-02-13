@@ -59,7 +59,13 @@ This plugin (**alphaListNav.js**) has very similar functionality to [jQuery List
     });
 ```
 
+### Issues and/or bugs:
+
+If you run into an issue or find a bug with alphaListNav.js, Please let me know!
+
+please click on the **Issues** tab or click [here](https://github.com/elliottprogrammer/alphaListNav.js/issues) to open an issue.
+
+Contributers welcome.
 
 #### Author:
-
 [Bryan Elliott](https://github.com/elliottprogrammer) 
