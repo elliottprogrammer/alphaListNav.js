@@ -31,7 +31,7 @@ class AlphaListNav {
             flagDisabled: true,
             removeDisabled: false,
             prefixes: [], // array of strings and/or RegEx's
-            filterSelector: '', 
+            filterSelector: '',
             showCounts: true,
             showLetterHeadings: true,
         }
@@ -105,7 +105,7 @@ class AlphaListNav {
             if (letter === '*') {
                 console.log(newListElem.children);
                 for (let div of newListElem.children) {
-                    if (div.id !== 'no-match' )
+                    if (div.id !== 'no-match')
                         div.classList.add('active');
                 }
             } else {
@@ -132,18 +132,27 @@ class AlphaListNav {
                         }
                     };
                     const countElem = document.createElement('span');
-                    countElem.className="alphaNav-count-elem";
-                    countElem.style.cssText = 'position:absolute;top:-12px;left:0;width:100%;text-align:center;font-size:75%;';
+                    countElem.className = "alphaNav-count-elem";
+                    countElem.style.cssText = `position:absolute;left:0;width:100%;text-align:center;font-size:75%;`;
                     countElem.textContent = count;
+                    // inject into dom, but with no visibility so we can calculate the element height
+                    countElem.style.visibility = 'none';
                     e.target.appendChild(countElem);
+                    const countElemHeight = countElem.getBoundingClientRect().height;
+                    // top position is -count elem height + 3.
+                    const countTopPos = countElemHeight + 3;
+                    // set count elem top position
+                    countElem.style.top = `-${countTopPos}px`;
+                    // and make visible
+                    countElem.style.visibility = 'visible';
                 });
-    
+
                 alphaLink.addEventListener('mouseout', e => {
                     e.target.removeChild(e.target.children[0]);
                 })
             });
         }
-        
+
     }
 
     // Retrieve the text value from DOM node or an array of DOM nodes.
@@ -276,7 +285,7 @@ class AlphaListNav {
 
     _getHeading(key) {
         let headingText = '';
-        switch(true) {
+        switch (true) {
             case /^[*]$/.test(key):
                 headingText = this.options.allText;
                 break;
@@ -300,7 +309,7 @@ class AlphaListNav {
         wrapper.id = 'alpha-list';
         wrapper.className = 'alpha-list';
         const NewList = Object.keys(alphaObj)
-            .sort((a,b) => {
+            .sort((a, b) => {
                 if (a === '-') return 1;
                 if (b === '-') return -1;
                 if (a < b)
@@ -310,33 +319,33 @@ class AlphaListNav {
                 return 0;
             })
             .map((key) => {
-            const div = document.createElement('div');
-            div.id = key;
-            div.className = 'alpha-list-wrapper';
-            if (this.options.showLetterHeadings) {
-                const heading = document.createElement('h3');
-                heading.className = 'alpha-list-heading';
-                heading.textContent = this._getHeading(key)
-                if (heading.textContent)
-                    div.appendChild(heading);
-            }
-            const ul = document.createElement('ul');
-            ul.className = 'alpha-list-group';
-            
-            alphaObj[key].forEach(node => {
-                ul.appendChild(node.cloneNode(true));
+                const div = document.createElement('div');
+                div.id = key;
+                div.className = 'alpha-list-wrapper';
+                if (this.options.showLetterHeadings) {
+                    const heading = document.createElement('h3');
+                    heading.className = 'alpha-list-heading';
+                    heading.textContent = this._getHeading(key)
+                    if (heading.textContent)
+                        div.appendChild(heading);
+                }
+                const ul = document.createElement('ul');
+                ul.className = 'alpha-list-group';
+
+                alphaObj[key].forEach(node => {
+                    ul.appendChild(node.cloneNode(true));
+                });
+                div.appendChild(ul);
+                wrapper.appendChild(div);
+                return div;
             });
-            div.appendChild(ul);
-            wrapper.appendChild(div);
-            return div;   
-        });
         const noMatchDiv = document.createElement('div');
         noMatchDiv.id = 'no-match';
         const noMatchUl = document.createElement('ul');
         noMatchUl.className = 'no-match-group';
         const noMatchLi = document.createElement('li');
         noMatchLi.textContent = this.options.noMatchText;
-        
+
         noMatchUl.appendChild(noMatchLi);
         noMatchDiv.appendChild(noMatchUl);
         wrapper.appendChild(noMatchDiv);
@@ -385,7 +394,7 @@ class AlphaListNav {
                     return block + '<div class="character-element disabled">...</div>';
                 } else {
                     return block + '<div class="character-element disabled">' + navChar + '</div>';
-                }   
+                }
             }
             return block + '<a class="character-element" data-filter="no-match" href="#">' + navChar + '</a>';
         }, '');
