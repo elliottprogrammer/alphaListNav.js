@@ -9,7 +9,7 @@ Git Repository: git+https://github.com/elliottprogrammer/alphaListNav.js.git */
 * 2. Add options
 *    - dont-count:
 *    - Remember last letter cookie?
-*    - onLetterClick function()git add
+*    - onLetterClick function()
 * 3. Add nice css styling
 * 4. Refactor & optimize for size
 * 
@@ -110,9 +110,8 @@ function () {
 
         try {
           for (var _iterator2 = newListElem.children[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-            var _ul = _step2.value;
-
-            _ul.classList.remove('active');
+            var ul = _step2.value;
+            ul.classList.remove('active');
           } // add active class to button clicked
 
         } catch (err) {
@@ -133,14 +132,15 @@ function () {
         e.target.classList.add('active'); // add active class to the list matching the cooresponding clicked letter
 
         if (letter === '*') {
+          console.log(newListElem.children);
           var _iteratorNormalCompletion3 = true;
           var _didIteratorError3 = false;
           var _iteratorError3 = undefined;
 
           try {
             for (var _iterator3 = newListElem.children[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-              var ul = _step3.value;
-              ul.classList.add('active');
+              var div = _step3.value;
+              if (div.id !== 'no-match') div.classList.add('active');
             }
           } catch (err) {
             _didIteratorError3 = true;
@@ -400,7 +400,13 @@ function () {
             return block;
           }
 
-          return block + '<div class="character-element disabled">' + navChar + '</div>';
+          if (navChar === '_') {
+            return block + '<div class="character-element disabled">0 - 9</div>';
+          } else if (navChar === '-') {
+            return block + '<div class="character-element disabled">...</div>';
+          } else {
+            return block + '<div class="character-element disabled">' + navChar + '</div>';
+          }
         }
 
         return block + '<a class="character-element" data-filter="no-match" href="#">' + navChar + '</a>';
@@ -444,7 +450,7 @@ function () {
       showLetterHeadings: true
     };
     this.listElem = this._isDomElement(listElem) ? listElem : false;
-    this.options = _objectSpread({}, defaultOptions, {}, options); // if there is prefixes[], check if any are strings, if so, convert to them to RegEx's
+    this.options = _objectSpread({}, defaultOptions, {}, options); // if there is options.prefixes[], check if any are strings, if so, convert to them to RegEx's
 
     if (this.options.prefixes.length) {
       var regexes = this.options.prefixes.map(function (val) {
@@ -482,15 +488,15 @@ function () {
       var headingText = '';
 
       switch (true) {
-        case /[*]/.test(key):
+        case /^[*]$/.test(key):
           headingText = this.options.allText;
           break;
 
-        case /[_]/.test(key):
+        case /^[_]$/.test(key):
           headingText = '0 - 9';
           break;
 
-        case /[-]/.test(key):
+        case /^[-]$/.test(key):
           headingText = 'Others';
           break;
 
