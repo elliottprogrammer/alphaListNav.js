@@ -8,7 +8,7 @@ module.exports = function (grunt) {
       all: {
         options: {
           src: 'alphaListNav.js',
-          dest: 'dist/alphaNistNav.min.js', // optional, if missing the src will be used
+          dest: 'dist/alphaListNav.min.js', // optional, if missing the src will be used
 
           // optional, a template from templates subdir
           // can be specified by name (e.g. 'umd'); if missing, the templates/umd.hbs

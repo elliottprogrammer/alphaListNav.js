@@ -24,24 +24,25 @@ body {
     position: relative;
     text-decoration: none;
     text-align: center;
-    line-height: 1;
-    padding: 5px 5px 0;
-    color: #005f97;
-    border-bottom: 1px solid #005f97
-}
-
-.character-element {
-    position: relative;
-    text-decoration: none;
-    text-align: center;
 /*     font-size: 1.2em; */
     line-height: 1;
+    white-space: nowrap;
     padding: 5px 6px;
     color: #005f97;
     border: 1px solid #aaa;
+    border-radius: 3px;
     background: rgb(2,0,36);
     background: linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(248,253,255,1) 0%, rgba(225,225,225,1) 100%);
 }
+
+@media (max-width: 767px) {
+    .character-element {
+        padding: calc(100% / 50);
+        margin: calc(100% / 50);
+        width: calc(100% / 15);
+    }
+}
+
 
 .alphaNav-count-elem {
     

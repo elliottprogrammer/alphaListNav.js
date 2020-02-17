@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="../dist/alphaListNav.css">
     <style>
         .container {
-            width: 100%;
             max-width: 1140px;
             padding-right: 15px;
             padding-left: 15px;
@@ -304,6 +303,142 @@
             <li class="item-class"><a href="">Wye</a></li>
             <li class="item-class"><a href="">Wyola</a></li>
         </ul>
+
+        <ul id="demoList1">
+            <li>Alfalfa Sprouts</li>
+            <li>Apple</li>
+            <li>Apricot</li>
+            <li>Artichoke</li>
+            <li>Asian Pear</li>
+            <li>Asparagus</li>
+            <li>Atemoya</li>
+            <li>Avocado</li>
+            <li>Bamboo Shoots</li>
+            <li>Banana</li>
+            <li>Bean Sprouts</li>
+            <li>Beans</li>
+            <li>Beets</li>
+            <li>Belgian Endive</li>
+            <li>Bell Peppers</li>
+            <li>Bitter Melon</li>
+            <li>Blackberries</li>
+            <li>Blueberries</li>
+            <li>Bok Choy</li>
+            <li>Boniato</li>
+            <li>Boysenberries</li>
+            <li>Broccoflower</li>
+            <li>Broccoli</li>
+            <li>Brussels Sprouts</li>
+            <li>Cabbage</li>
+            <li>Cactus Pear</li>
+            <li>Cantaloupe</li>
+            <li>Carambola</li>
+            <li>Carrots</li>
+            <li>Casaba Melon</li>
+            <li>Cauliflower</li>
+            <li>Celery</li>
+            <li>Chayote</li>
+            <li>Cherimoya</li>
+            <li>Cherries</li>
+            <li>Coconuts</li>
+            <li>Collard Greens</li>
+            <li>Corn</li>
+            <li>Cranberries</li>
+            <li>Cucumber</li>
+            <li>Dates</li>
+            <li>Dried Plums</li>
+            <li>Eggplant</li>
+            <li>Endive</li>
+            <li>Escarole</li>
+            <li>Feijoa</li>
+            <li>Fennel</li>
+            <li>Figs</li>
+            <li>Garlic</li>
+            <li>Gooseberries</li>
+            <li>Grapefruit</li>
+            <li>Grapes</li>
+            <li>Green Beans</li>
+            <li>Green Onions</li>
+            <li>Greens</li>
+            <li>Guava</li>
+            <li>Hominy</li>
+            <li>Honeydew Melon</li>
+            <li>Horned Melon</li>
+            <li>Iceberg Lettuce</li>
+            <li>Jerusalem Artichoke</li>
+            <li>Jicama</li>
+            <li>Kale</li>
+            <li>Kiwifruit</li>
+            <li>Kohlrabi</li>
+            <li>Kumquat</li>
+            <li>Leeks</li>
+            <li>Lemons</li>
+            <li>Lettuce</li>
+            <li>Lima Beans</li>
+            <li>Limes</li>
+            <li>Longan</li>
+            <li>Loquat</li>
+            <li>Lychee</li>
+            <li>Madarins</li>
+            <li>Malanga</li>
+            <li>Mandarin Oranges</li>
+            <li>Mangos</li>
+            <li>Mulberries</li>
+            <li>Mushrooms</li>
+            <li>Napa</li>
+            <li>Nectarines</li>
+            <li>Okra</li>
+            <li>Onion</li>
+            <li>Oranges</li>
+            <li>Papayas</li>
+            <li>Parsnip</li>
+            <li>Passion Fruit</li>
+            <li>Peaches</li>
+            <li>Pears</li>
+            <li>Peas</li>
+            <li>Peppers</li>
+            <li>Persimmons</li>
+            <li>Pineapple</li>
+            <li>Plantains</li>
+            <li>Plums</li>
+            <li>Pomegranate</li>
+            <li>Potatoes</li>
+            <li>Prickly Pear</li>
+            <li>Prunes</li>
+            <li>Pummelo</li>
+            <li>Pumpkin</li>
+            <li>Quince</li>
+            <li>Radicchio</li>
+            <li>Radishes</li>
+            <li>Raisins</li>
+            <li>Raspberries</li>
+            <li>Red Cabbage</li>
+            <li>Rhubarb</li>
+            <li>Romaine Lettuce</li>
+            <li>Rutabaga</li>
+            <li>Shallots</li>
+            <li>Snow Peas</li>
+            <li>Spinach</li>
+            <li>Sprouts</li>
+            <li>Squash</li>
+            <li>Strawberries</li>
+            <li>String Beans</li>
+            <li>Sweet Potato</li>
+            <li>Tangelo</li>
+            <li>Tangerines</li>
+            <li>Tomatillo</li>
+            <li>Tomato</li>
+            <li>Turnip</li>
+            <li>Ugli Fruit</li>
+            <li>Water Chestnuts</li>
+            <li>Watercress</li>
+            <li>Watermelon</li>
+            <li>Waxed Beans</li>
+            <li>Yams</li>
+            <li>Yellow Squash</li>
+            <li>Yuca/Cassava</li>
+            <li>Zucchini Squash</li>
+        </ul>
         <!-- <ul id="demoSix" class="demo imageList">
             <li class="ln-c listNavShow">
                 <img src="images/crusher.png" width="120" height="90">
@@ -378,8 +513,17 @@
     <script>
 
         // Create new instance of AlphaListNav
-        //const cityList = new AlphaListNav(document.getElementById('demoSix'), {});
-        const cityList = new AlphaListNav(document.getElementById('list-nav'));
+       const listElem = document.getElementById('list-nav');
+        const cityList = new AlphaListNav(listElem, {
+            includeAll: false,
+            includeNums: false,
+            initLetter: 'a',
+        });
+
+        const listElem2 = document.getElementById('demoList1');
+        const fruitList = new AlphaListNav(listElem2, {
+            initLetter: 'a',
+        });
 
     </script>
 </body>

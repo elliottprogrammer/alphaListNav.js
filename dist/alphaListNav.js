@@ -42,7 +42,7 @@ function () {
     _defineProperty(this, "init", function () {
       // if first arg is not an HTMLElement, return
       if (!_this.listElem) {
-        console.error('The supplied argument must be a HTML DOM element.');
+        console.error('The supplied argument must be a HTML DOM element or a valid element id (string)');
         return;
       } // get array of list items
 
@@ -51,29 +51,26 @@ function () {
       // sort list into an alphabetical object
 
 
-      var alphaObj = _this._getAlphaObj(listItems);
+      _this.alphaObj = _this._getAlphaObj(listItems); //console.log(this.alphaObj);
+      // generate new list html with sorting markup
 
-      console.log(alphaObj); // generate new list html with sorting markup
+      _this.newListHTML = _this._generateNewListHTML(_this.alphaObj); // generate the alpha-nav buttons html
 
-      var newListHTML = _this._generateNewListHTML(alphaObj); // generate the alpha-nav buttons html
+      _this.alphaNav = _this._generateAlphaNav(_this.alphaObj); // Replace the old list with the new alpha-list in the dom
 
-
-      var alphaNav = _this._generateAlphaNav(alphaObj); // Replace the old list with the new alpha-list in the dom
-
-
-      _this.listElem.parentNode.replaceChild(newListHTML, _this.listElem); // get reference to the new alpha-list
-
-
-      var newListElem = document.getElementById('alpha-list'); // Add alpha-nav buttons to dom
-
-      newListElem.parentNode.insertBefore(alphaNav, newListElem); // get reference to alpha-nav
-
-      var alphaNavElem = document.getElementById('alpha-nav');
-
-      _this.initAlphaListNav(newListElem, alphaNavElem, alphaObj); // Add event listener to alpha-nav buttons
+      _this.listElem.parentNode.replaceChild(_this.newListHTML, _this.listElem); // // get reference to the new alpha-list
+      //const newListElem = document.getElementById('alpha-list');
+      // Add alpha-nav buttons to dom
 
 
-      alphaNavElem.addEventListener('click', function (e) {
+      _this.newListHTML.parentNode.insertBefore(_this.alphaNav, _this.newListHTML); // get reference to alpha-nav
+      //const alphaNavElem = document.getElementById('alpha-nav');
+
+
+      _this.initAlphaListNav(_this.newListHTML, _this.alphaNav, _this.alphaObj); // Add event listener to alpha-nav buttons
+
+
+      _this.alphaNav.addEventListener('click', function (e) {
         // TODO: replace with create selectLetter() function
         e.preventDefault();
         if (!e.target.dataset.filter) return;
@@ -84,7 +81,7 @@ function () {
         var _iteratorError = undefined;
 
         try {
-          for (var _iterator = alphaNavElem.children[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          for (var _iterator = _this.alphaNav.children[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
             var btn = _step.value;
             btn.classList.remove('active');
           } // remove active class from all lists
@@ -109,7 +106,7 @@ function () {
         var _iteratorError2 = undefined;
 
         try {
-          for (var _iterator2 = newListElem.children[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+          for (var _iterator2 = _this.newListHTML.children[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
             var ul = _step2.value;
             ul.classList.remove('active');
           } // add active class to button clicked
@@ -132,13 +129,12 @@ function () {
         e.target.classList.add('active'); // add active class to the list matching the cooresponding clicked letter
 
         if (letter === '*') {
-          console.log(newListElem.children);
           var _iteratorNormalCompletion3 = true;
           var _didIteratorError3 = false;
           var _iteratorError3 = undefined;
 
           try {
-            for (var _iterator3 = newListElem.children[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+            for (var _iterator3 = _this.newListHTML.children[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
               var div = _step3.value;
               if (div.id !== 'no-match') div.classList.add('active');
             }
@@ -157,12 +153,13 @@ function () {
             }
           }
         } else {
-          document.getElementById(letter).classList.add('active');
+          _this.newListHTML.querySelector("#".concat(letter)).classList.add('active');
         }
       }); // Show letter counts
 
+
       if (_this.options.showCounts) {
-        Array.prototype.slice.call(alphaNavElem.children).forEach(function (alphaLink) {
+        Array.prototype.slice.call(_this.alphaNav.children).forEach(function (alphaLink) {
           alphaLink.addEventListener('mouseover', function (e) {
             var count = 0;
 
@@ -171,11 +168,11 @@ function () {
 
               if (filter !== 'no-match') {
                 if (filter === '*') {
-                  count = Object.keys(alphaObj).reduce(function (accum, key) {
-                    return accum + alphaObj[key].length;
+                  count = Object.keys(_this.alphaObj).reduce(function (accum, key) {
+                    return accum + _this.alphaObj[key].length;
                   }, 0);
                 } else {
-                  count = alphaObj[filter].length;
+                  count = _this.alphaObj[filter].length;
                 }
               }
             }
@@ -183,9 +180,18 @@ function () {
             ;
             var countElem = document.createElement('span');
             countElem.className = "alphaNav-count-elem";
-            countElem.style.cssText = 'position:absolute;top:-12px;left:0;width:100%;text-align:center;font-size:75%;';
-            countElem.textContent = count;
+            countElem.style.cssText = "position:absolute;left:0;width:100%;text-align:center;font-size:75%;";
+            countElem.textContent = count; // inject into dom, but with no visibility so we can calculate the element height
+
+            countElem.style.visibility = 'none';
             e.target.appendChild(countElem);
+            var countElemHeight = countElem.getBoundingClientRect().height; // top position is -count elem height + 3.
+
+            var countTopPos = countElemHeight + 2; // set count elem top position
+
+            countElem.style.top = "-".concat(countTopPos, "px"); // and make visible
+
+            countElem.style.visibility = 'visible';
           });
           alphaLink.addEventListener('mouseout', function (e) {
             e.target.removeChild(e.target.children[0]);
@@ -380,8 +386,8 @@ function () {
       }
 
       if (_this.options.includeOther) abcChars.push('-');
-      if (_this.options.includeAll) abcChars.unshift('*');
-      console.log(abcChars);
+      if (_this.options.includeAll) abcChars.unshift('*'); //console.log(abcChars);
+
       var navigationEntries = abcChars.reduce(function (block, navChar) {
         if (alphaObj[navChar.toLowerCase()]) {
           if (navChar === '_') {
@@ -449,8 +455,11 @@ function () {
       showCounts: true,
       showLetterHeadings: true
     };
-    this.listElem = this._isDomElement(listElem) ? listElem : false;
-    this.options = _objectSpread({}, defaultOptions, {}, options); // if there is options.prefixes[], check if any are strings, if so, convert to them to RegEx's
+    this.listElem = this._isDomElement(listElem) ? listElem : document.getElementById(listElem);
+    this.options = _objectSpread({}, defaultOptions, {}, options);
+    this.alphaObj = null;
+    this.alphaNav = null;
+    this.newListHTML = null; // if there is options.prefixes[], check if any are strings, if so, convert to them to RegEx's
 
     if (this.options.prefixes.length) {
       var regexes = this.options.prefixes.map(function (val) {
