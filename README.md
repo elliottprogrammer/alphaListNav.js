@@ -8,12 +8,14 @@ This plugin (**alphaListNav.js**) has very similar functionality to [jQuery List
 <sub><sup>Credit to [Eric Stienborn](https://github.com/esteinborn) for the original [jQuery ListNav](https://github.com/esteinborn/jquery-listnav).</sup></sub>  
 
 
-#### CodePen example here:
+### Demos & Documentation
+
+(https://elliottprogrammer.github.io/alphaListNav.js/)
+
+#### CodePen example:
 
 (https://codepen.io/melliatto/pen/vwWjjj)
 
-
-#### Demo website coming soon!
 
 ## Installation
 
@@ -31,7 +33,7 @@ This plugin (**alphaListNav.js**) has very similar functionality to [jQuery List
 
 #### Add the JavaScript before `</body>`:
 ```html
-<script src="alphaListNav.min.js"></script>
+<script src="alphaListNav.js"></script>
 <script>
         const alphaNav = new AlphaListNav(document.getElementById("myList"));
 </script>
