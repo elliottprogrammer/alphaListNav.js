@@ -113,7 +113,7 @@ class AlphaListNav {
                         div.classList.add('active');
                 }
             } else {
-                this.newListHTML.querySelector(`#${letter}`).classList.add('active');
+                this.newListHTML.querySelector(`#${letter.replace(/[-]/, '\\$&')}`).classList.add('active');
             }
 
         });
