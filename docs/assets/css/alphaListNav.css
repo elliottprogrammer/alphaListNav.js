@@ -1,0 +1,54 @@
+body {
+  font-family: sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  background-color: #fafafa; }
+
+.alpha-list-wrapper, #no-match {
+  display: none; }
+
+.alpha-list-wrapper.active, #no-match.active {
+  display: block; }
+
+#alpha-nav {
+  padding-top: 15px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly; }
+
+.character-element {
+  position: relative;
+  text-decoration: none;
+  text-align: center;
+  /*     font-size: 1.2em; */
+  line-height: 1;
+  white-space: nowrap;
+  padding: 5px 6px;
+  color: #005f97;
+  border-radius: 3px;
+  border: 1px solid #aaa;
+  background: #020024;
+  background: linear-gradient(180deg, #020024 0%, #f8fdff 0%, #e1e1e1 100%); }
+
+@media (max-width: 767px) {
+  .character-element {
+    padding: calc(100% / 50);
+    margin: calc(100% / 50);
+    width: calc(100% / 15); } }
+
+.character-element:not(.disabled):hover,
+.character-element:not(.disabled):active {
+  background: #ccc;
+  cursor: pointer; }
+
+.character-element.disabled {
+  color: #aaa;
+  cursor: default; }
+
+.character-element.active {
+  color: #333;
+  background: #ccc;
+  border-color: #6094b3;
+}
+
+/*# sourceMappingURL=alphaListNav.css.map */
