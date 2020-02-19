@@ -8,7 +8,7 @@ This plugin (**alphaListNav.js**) has very similar functionality to [jQuery List
 <sub><sup>Credit to [Eric Stienborn](https://github.com/esteinborn) for the original [jQuery ListNav](https://github.com/esteinborn/jquery-listnav).</sup></sub>  
 
 
-### Demos & Documentation
+## Demos & Documentation
 
 (https://elliottprogrammer.github.io/alphaListNav.js/)
 
