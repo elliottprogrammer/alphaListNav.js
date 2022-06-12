@@ -7,10 +7,8 @@ Git Repository: git+https://github.com/elliottprogrammer/alphaListNav.js.git */
 /**
  * ** TODO: **
  * 2. Add options
- *    - dont-count:
  *    - Remember last letter cookie?
  *    - onLetterClick function()
- *
  **/
 
 class AlphaListNav {
