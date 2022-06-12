@@ -74,15 +74,16 @@ Contributers welcome.
 
 ### Development:
 
-1.  Clone the repo to your local machine ('git clone https://github.com/elliottprogrammer/alphaListNav.js.git`).
+1.  Clone the repo to your local machine (`git clone https://github.com/elliottprogrammer/alphaListNav.js.git`).
 2.  Navigate into the project: `cd alphaListNav`.
 3.  Run `npm install`.
 
 -   The `alphaListNav.js` in the root directory is the source js file.
 -   The `alphaListNav.scss` in the root disrectory is the source scss file.
 
-You can make changes and then run `grunt` to build all the files (compile scss, babelize, uglify, etc.) - You need to have `grunt-cli` installed globally to run the `grunt` command: (`npm install -g grunt-cli`).
-Then open the `demos/index.html` file to view your changes.
+-   You can make changes and then run `grunt` to build all the files (compile scss, babelize, uglify, etc.)
+    -   You'll need to have `grunt-cli` installed globally to run the `grunt` command: (`npm install -g grunt-cli`).
+-   Then open the `demos/index.html` file to view your changes.
 
 #### Author:
 
