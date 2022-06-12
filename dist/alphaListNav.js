@@ -1,37 +1,56 @@
-"use strict";
-/*! alphaListNav.js - v0.7.1
-Build Date: 02-05-2020
+(function (root, factory) {
+  if (root === undefined && window !== undefined) root = window;
+  if (typeof define === 'function' && define.amd) {
+    // AMD. Register as an anonymous module unless amdModuleId is set
+    define([], function () {
+      return (root['AlphaListNav'] = factory());
+    });
+  } else if (typeof module === 'object' && module.exports) {
+    // Node. Does not work with strict CommonJS, but
+    // only CommonJS-like environments that support module.exports,
+    // like Node.
+    module.exports = factory();
+  } else {
+    root['AlphaListNav'] = factory();
+  }
+}(this, function () {
+
+'use strict';
+/*! alphaListNav.js - v0.7.2
+Build Date: 06-11-2022
 Author: [Bryan Elliott] (https://github.com/elliottprogrammer/)
 Git Repository: git+https://github.com/elliottprogrammer/alphaListNav.js.git */
 
 /**
-* ** TODO: **
-* 2. Add options
-*    - dont-count:
-*    - Remember last letter cookie?
-*    - onLetterClick function()
-* 3. Add nice css styling
-* 4. Refactor & optimize for size
-* 
-**/
+ * ** TODO: **
+ * 2. Add options
+ *    - dont-count:
+ *    - Remember last letter cookie?
+ *    - onLetterClick function()
+ *
+ **/
 
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var AlphaListNav =
-/*#__PURE__*/
-function () {
+var AlphaListNav = /*#__PURE__*/function () {
   function AlphaListNav(listElem) {
     var _this = this;
 
@@ -58,14 +77,10 @@ function () {
 
       _this.alphaNav = _this._generateAlphaNav(_this.alphaObj); // Replace the old list with the new alpha-list in the dom
 
-      _this.listElem.parentNode.replaceChild(_this.newListHTML, _this.listElem); // // get reference to the new alpha-list
-      //const newListElem = document.getElementById('alpha-list');
-      // Add alpha-nav buttons to dom
+      _this.listElem.parentNode.replaceChild(_this.newListHTML, _this.listElem); // Add alpha-nav buttons to dom
 
 
-      _this.newListHTML.parentNode.insertBefore(_this.alphaNav, _this.newListHTML); // get reference to alpha-nav
-      //const alphaNavElem = document.getElementById('alpha-nav');
-
+      _this.newListHTML.parentNode.insertBefore(_this.alphaNav, _this.newListHTML);
 
       _this.initAlphaListNav(_this.newListHTML, _this.alphaNav, _this.alphaObj); // Add event listener to alpha-nav buttons
 
@@ -76,81 +91,51 @@ function () {
         if (!e.target.dataset.filter) return;
         var letter = e.target.dataset.filter; // remove active class from all buttons
 
-        var _iteratorNormalCompletion = true;
-        var _didIteratorError = false;
-        var _iteratorError = undefined;
+        var _iterator = _createForOfIteratorHelper(_this.alphaNav.children),
+            _step;
 
         try {
-          for (var _iterator = _this.alphaNav.children[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          for (_iterator.s(); !(_step = _iterator.n()).done;) {
             var btn = _step.value;
             btn.classList.remove('active');
           } // remove active class from all lists
 
         } catch (err) {
-          _didIteratorError = true;
-          _iteratorError = err;
+          _iterator.e(err);
         } finally {
-          try {
-            if (!_iteratorNormalCompletion && _iterator["return"] != null) {
-              _iterator["return"]();
-            }
-          } finally {
-            if (_didIteratorError) {
-              throw _iteratorError;
-            }
-          }
+          _iterator.f();
         }
 
-        var _iteratorNormalCompletion2 = true;
-        var _didIteratorError2 = false;
-        var _iteratorError2 = undefined;
+        var _iterator2 = _createForOfIteratorHelper(_this.newListHTML.children),
+            _step2;
 
         try {
-          for (var _iterator2 = _this.newListHTML.children[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+          for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
             var ul = _step2.value;
             ul.classList.remove('active');
           } // add active class to button clicked
 
         } catch (err) {
-          _didIteratorError2 = true;
-          _iteratorError2 = err;
+          _iterator2.e(err);
         } finally {
-          try {
-            if (!_iteratorNormalCompletion2 && _iterator2["return"] != null) {
-              _iterator2["return"]();
-            }
-          } finally {
-            if (_didIteratorError2) {
-              throw _iteratorError2;
-            }
-          }
+          _iterator2.f();
         }
 
         e.target.classList.add('active'); // add active class to the list matching the cooresponding clicked letter
 
         if (letter === '*') {
-          var _iteratorNormalCompletion3 = true;
-          var _didIteratorError3 = false;
-          var _iteratorError3 = undefined;
+          var _iterator3 = _createForOfIteratorHelper(_this.newListHTML.children),
+              _step3;
 
           try {
-            for (var _iterator3 = _this.newListHTML.children[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+            for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
               var div = _step3.value;
               if (div.id !== 'no-match') div.classList.add('active');
             }
           } catch (err) {
-            _didIteratorError3 = true;
-            _iteratorError3 = err;
+            _iterator3.e(err);
           } finally {
-            try {
-              if (!_iteratorNormalCompletion3 && _iterator3["return"] != null) {
-                _iterator3["return"]();
-              }
-            } finally {
-              if (_didIteratorError3) {
-                throw _iteratorError3;
-              }
-            }
+            _iterator3.f();
           }
         } else {
           _this.newListHTML.querySelector("#".concat(letter.replace(/[-]/, '\\$&'))).classList.add('active');
@@ -177,9 +162,8 @@ function () {
               }
             }
 
-            ;
             var countElem = document.createElement('span');
-            countElem.className = "alphaNav-count-elem";
+            countElem.className = 'alphaNav-count-elem';
             countElem.style.cssText = "position:absolute;left:0;width:100%;text-align:center;font-size:75%;";
             countElem.textContent = count; // inject into dom, but with no visibility so we can calculate the element height
 
@@ -202,7 +186,7 @@ function () {
 
     _defineProperty(this, "_getText", function (elem) {
       var node,
-          ret = "",
+          ret = '',
           i = 0,
           nodeType = elem.nodeType;
 
@@ -214,7 +198,7 @@ function () {
         }
       } else if (nodeType === 1 || nodeType === 9 || nodeType === 11) {
         // Use textContent for elements
-        if (typeof elem.textContent === "string") {
+        if (typeof elem.textContent === 'string') {
           return elem.textContent;
         } else {
           // Traverse its children
@@ -456,7 +440,7 @@ function () {
       showLetterHeadings: true
     };
     this.listElem = this._isDomElement(listElem) ? listElem : document.getElementById(listElem);
-    this.options = _objectSpread({}, defaultOptions, {}, options);
+    this.options = _objectSpread(_objectSpread({}, defaultOptions), options);
     this.alphaObj = null;
     this.alphaNav = null;
     this.newListHTML = null; // if there is options.prefixes[], check if any are strings, if so, convert to them to RegEx's
@@ -465,14 +449,14 @@ function () {
       var regexes = this.options.prefixes.map(function (val) {
         if (typeof val === 'string') {
           val = val.replace(/[.*+?^${}()|[\]\\]/, '\\$&');
-          return val + '\\s'; //new RegExp(val);
+          return val + '\\s';
         }
 
         if (_typeof(val) === 'object' && val instanceof RegExp) {
           return val.source + '\\s';
         }
       });
-      this.options.prefixes = new RegExp(regexes.join("|"), "gi");
+      this.options.prefixes = new RegExp(regexes.join('|'), 'gi');
     }
 
     this.init();
@@ -487,8 +471,8 @@ function () {
   }, {
     key: "_isDomElement",
     value: function _isDomElement(elem) {
-      return (typeof HTMLElement === "undefined" ? "undefined" : _typeof(HTMLElement)) === "object" ? elem instanceof HTMLElement : //DOM2
-      elem && _typeof(elem) === "object" && elem !== null && elem.nodeType === 1 && typeof elem.nodeName === "string";
+      return (typeof HTMLElement === "undefined" ? "undefined" : _typeof(HTMLElement)) === 'object' ? elem instanceof HTMLElement //DOM2
+      : elem && _typeof(elem) === 'object' && elem !== null && elem.nodeType === 1 && typeof elem.nodeName === 'string';
     } // create object of list items ordered by each alphabet letter
 
   }, {
@@ -523,4 +507,7 @@ function () {
 
   return AlphaListNav;
 }();
-//# sourceMappingURL=alphaListNav.js.map
+
+return AlphaListNav;
+
+}));

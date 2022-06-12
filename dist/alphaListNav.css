@@ -4,10 +4,12 @@ body {
   font-size: 16px;
   background-color: #fafafa; }
 
-.alpha-list-wrapper, #no-match {
+.alpha-list-wrapper,
+#no-match {
   display: none; }
 
-.alpha-list-wrapper.active, #no-match.active {
+.alpha-list-wrapper.active,
+#no-match.active {
   display: block; }
 
 #alpha-nav {
@@ -34,7 +36,7 @@ body {
   .character-element {
     padding: calc(100% / 50);
     margin: calc(100% / 50);
-    width: calc(100% / 15); } }
+    min-width: calc(100% / 15); } }
 
 .character-element:not(.disabled):hover,
 .character-element:not(.disabled):active {
