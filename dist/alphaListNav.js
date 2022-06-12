@@ -325,8 +325,12 @@ var AlphaListNav = /*#__PURE__*/function () {
         div.className = 'alpha-list-wrapper';
 
         if (_this.options.showLetterHeadings) {
-          var heading = document.createElement('h3');
+          var allowedHeadingTags = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'span', 'div']; // Sanitize headingTag
+
+          var headingTag = allowedHeadingTags.includes(_this.options.letterHeadingTag) ? _this.options.letterHeadingTag : 'h3';
+          var heading = document.createElement(headingTag);
           heading.className = 'alpha-list-heading';
+          heading.id = _this._getHeading(key).replace(/\s/g, '');
           heading.textContent = _this._getHeading(key);
           if (heading.textContent) div.appendChild(heading);
         }
@@ -437,7 +441,8 @@ var AlphaListNav = /*#__PURE__*/function () {
       // array of strings and/or RegEx's
       filterSelector: '',
       showCounts: true,
-      showLetterHeadings: true
+      showLetterHeadings: true,
+      letterHeadingTag: 'h3'
     };
     this.listElem = this._isDomElement(listElem) ? listElem : document.getElementById(listElem);
     this.options = _objectSpread(_objectSpread({}, defaultOptions), options);

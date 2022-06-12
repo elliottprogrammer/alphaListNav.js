@@ -31,6 +31,7 @@ class AlphaListNav {
 			filterSelector: '',
 			showCounts: true,
 			showLetterHeadings: true,
+			letterHeadingTag: 'h3',
 		};
 
 		this.listElem = this._isDomElement(listElem)
@@ -368,8 +369,26 @@ class AlphaListNav {
 				div.id = key;
 				div.className = 'alpha-list-wrapper';
 				if (this.options.showLetterHeadings) {
-					const heading = document.createElement('h3');
+					const allowedHeadingTags = [
+						'h1',
+						'h2',
+						'h3',
+						'h4',
+						'h5',
+						'h6',
+						'p',
+						'span',
+						'div',
+					];
+					// Sanitize headingTag
+					const headingTag = allowedHeadingTags.includes(
+						this.options.letterHeadingTag
+					)
+						? this.options.letterHeadingTag
+						: 'h3';
+					const heading = document.createElement(headingTag);
 					heading.className = 'alpha-list-heading';
+					heading.id = this._getHeading(key).replace(/\s/g, '');
 					heading.textContent = this._getHeading(key);
 					if (heading.textContent) div.appendChild(heading);
 				}
