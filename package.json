@@ -4,8 +4,9 @@
 	"description": "Filter An HTML List Alphebetically - alphaListNav.js will add an alphebetical navigation bar to all of your lists. Click a letter to quickly filter the list to show items that match that letter. With many different options and features.",
 	"main": "alphaListNav.js",
 	"scripts": {
-		"dev": "grunt watch",
-		"build": "grunt build"
+		"dev": "npx grunt watch",
+		"build": "npx grunt build --verbose",
+		"build:all": "npx grunt build:all --verbose"
 	},
 	"repository": {
 		"type": "git",
@@ -34,9 +35,11 @@
 		"@babel/preset-env": "^7.18.2",
 		"grunt": "^1.5.3",
 		"grunt-babel": "^8.0.0",
+		"grunt-cli": "^1.4.3",
 		"grunt-contrib-copy": "^1.0.0",
 		"grunt-contrib-cssmin": "^4.0.0",
 		"grunt-contrib-uglify": "^5.2.1",
+		"grunt-contrib-watch": "^1.1.0",
 		"grunt-sass": "^3.1.0",
 		"grunt-umd": "^3.0.0",
 		"node-sass": "^7.0.1"

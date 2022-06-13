@@ -12,14 +12,14 @@ module.exports = function (grunt) {
 					'@babel/plugin-proposal-object-rest-spread',
 				],
 			},
-			dist: {
+			target: {
 				files: {
 					'dist/alphaListNav.js': 'alphaListNav.js',
 				},
 			},
 		},
 		umd: {
-			all: {
+			target: {
 				options: {
 					src: 'dist/alphaListNav.js',
 					dest: 'dist/alphaListNav.js', // optional, if missing the src will be used
@@ -39,7 +39,7 @@ module.exports = function (grunt) {
 				mangle: false,
 				compress: {},
 			},
-			dist: {
+			target: {
 				files: {
 					'dist/alphaListNav.min.js': ['dist/alphaListNav.js'],
 				},
@@ -50,7 +50,7 @@ module.exports = function (grunt) {
 				implementation: sass,
 				sourceMap: true,
 			},
-			dist: {
+			target: {
 				files: {
 					'dist/alphaListNav.css': 'alphaListNav.scss',
 				},
@@ -79,19 +79,46 @@ module.exports = function (grunt) {
 				filter: 'isFile',
 			},
 		},
+		watch: {
+			js: {
+				files: './alphaListNav.js',
+				tasks: ['babel', 'umd', 'uglify'],
+				options: {
+					spawn: false,
+				},
+			},
+			sass: {
+				files: './alphaListNav.scss',
+				tasks: ['sass', 'cssmin'],
+				options: {
+					spawn: false,
+				},
+			},
+		},
 	});
 
 	grunt.loadNpmTasks('grunt-babel');
 	grunt.loadNpmTasks('grunt-umd');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
-
 	grunt.loadNpmTasks('grunt-sass');
 	grunt.loadNpmTasks('grunt-contrib-cssmin');
 	grunt.loadNpmTasks('grunt-contrib-copy');
+	grunt.loadNpmTasks('grunt-contrib-watch');
 
 	grunt.registerTask('default', [
 		'babel',
-		'umd:all',
+		'umd',
+		'uglify',
+		'sass',
+		'cssmin',
+		'copy',
+	]);
+
+	grunt.registerTask('build', ['babel', 'umd', 'uglify', 'sass', 'cssmin']);
+	grunt.registerTask('publish-docs', ['copy']);
+	grunt.registerTask('build:all', [
+		'babel',
+		'umd',
 		'uglify',
 		'sass',
 		'cssmin',
