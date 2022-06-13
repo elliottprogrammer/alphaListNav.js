@@ -24,10 +24,8 @@ Git Repository: git+https://github.com/elliottprogrammer/alphaListNav.js.git */
 /**
  * ** TODO: **
  * 2. Add options
- *    - dont-count:
  *    - Remember last letter cookie?
  *    - onLetterClick function()
- *
  **/
 
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
