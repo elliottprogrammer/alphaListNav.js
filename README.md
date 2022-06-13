@@ -80,12 +80,12 @@ Contributers welcome.
 2.  Navigate into the project: `cd alphaListNav`.
 3.  Run `npm install`.
 
--   The `alphaListNav.js` in the root directory is the source js file.
--   The `alphaListNav.scss` in the root disrectory is the source scss file.
+-   The `alphaListNav.js` file in the root directory is the main source js file.
+-   The `alphaListNav.scss` file in the root disrectory is the source stylesheet file.
 
--   You can make changes and then run `grunt` to build all the files (compile scss, babelize, uglify, etc.)
-    -   You'll need to have `grunt-cli` installed globally to run the `grunt` command: (`npm install -g grunt-cli`).
--   Then open the `demos/index.html` file to view your changes.
+-   The project demo file used for development is in `demos/index.html`. Serve this file to view your changes.
+
+-   Run `npm run dev` to **watch** `alphaListNav.js` and `alphaListNav.scss` for changes. When changes to these files occur, the js and scss are compiled to the `dist/` folder. ( or you can run `npm run build` after every change.)
 
 #### Author:
 
